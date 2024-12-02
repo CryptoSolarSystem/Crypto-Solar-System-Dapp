@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stars Background with Wallet Connect</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden; /* Mantiene il canvas fisso */
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0; /* Sotto i contenuti */
+    }
+
+    .content-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; /* Sopra il canvas */
+      overflow-y: auto; /* Barra di scorrimento verticale */
+      padding: 20px; /* Spaziatura interna */
+      box-sizing: border-box; /* Include il padding */
+    }
+
+    .content-block {
+      background: rgba(0, 0, 0, 0.8); /* Sfondo trasparente */
+      color: white;
+      margin: 20px auto; /* Margine sopra e sotto */
+      padding: 20px;
+      border-radius: 8px; /* Angoli arrotondati */
+      max-width: 800px; /* Larghezza massima del contenuto */
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px; /* Altezza del video regolata */
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px; /* Margine sopra il video */
+      margin-bottom: 20px; /* Margine sotto il video */
+    }
+
+    .wallet-button, .wallet-button-uniswap, .wallet-button-metamask {
+      position: fixed;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: #8a2be2; /* Colore viola */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 2; /* Sopra tutto */
+      display: flex;
+      align-items: center; /* Centra logo e testo */
+      gap: 10px; /* Spaziatura tra logo e testo */
+      width: 230px; /* Larghezza fissa */
+      height: 50px; /* Altezza fissa */
+      justify-content: center; /* Centrare contenuti */
+    }
+
+    .wallet-button:hover, .wallet-button-uniswap:hover, .wallet-button-metamask:hover {
+      background-color: #6c2da2; /* Colore più chiaro al passaggio del mouse */
+    }
+
+    .wallet-logo {
+      width: 24px; /* Dimensione del logo */
+      height: 24px;
+    }
+
+    .wallet-button-metamask {
+      top: 80px; /* Posizionato sotto il pulsante Uniswap */
+    }
+
+    .wallet-button-uniswap {
+      top: 140px; /* Posizionato sotto il pulsante MetaMask */
+    }
+
+    .wallet-button {
+      top: 200px; /* Posizionato sotto il pulsante MetaMask */
+    }
+  </style>
+</head>
+<body>
+  <!-- Include ethers.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Imposta la scena
+    const scene = new THREE.Scene();
+
+    // Imposta la camera
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 500;
+
+    // Imposta il renderer
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Configurazione dello sfondo con le stelle
+    const starGeometry = new THREE.BufferGeometry();
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
+    const starVertices = [];
+    for (let i = 0; i < 1000; i++) {
+      const x = (Math.random() - 0.5) * 2000;
+      const y = (Math.random() - 0.5) * 2000;
+      const z = (Math.random() - 0.5) * 2000;
+      starVertices.push(x, y, z);
+    }
+    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    // Funzione di animazione
+    function animate() {
+      requestAnimationFrame(animate);
+      stars.rotation.y += 0.001; // Rotazione lenta delle stelle
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Adatta il rendering alla finestra
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    });
+
+    // Funzioni di connessione ai wallet (Phantom, Uniswap, MetaMask)
+    async function connectWallet() {
+      if (window.solana && window.solana.isPhantom) {
+        try {
+          const resp = await window.solana.connect();
+          alert(`Wallet connesso: ${resp.publicKey.toString()}`);
+        } catch (err) {
+          console.error("Errore nella connessione al wallet:", err);
+        }
+      } else {
+        window.location.href = "https://phantom.app/ul/connect";
+      }
+    }
+
+    let provider, signer;
+
+    async function connectUniswapWallet() {
+      if (window.ethereum) {
+        try {
+          provider = new ethers.providers.Web3Provider(window.ethereum);
+          await provider.send("eth_requestAccounts", []);
+          signer = provider.getSigner();
+          const address = await signer.getAddress();
+          alert(`Uniswap Wallet connesso: ${address}`);
+        } catch (error) {
+          console.error("Errore durante la connessione:", error);
+          alert("Errore durante la connessione al wallet.");
+        }
+      } else {
+        alert("Ethereum wallet non trovato. Installa MetaMask, Uniswap Wallet o simili.");
+      }
+    }
+
+    async function connectMetaMaskWallet() {
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+          alert(`MetaMask Wallet connesso: ${accounts[0]}`);
+        } catch (error) {
+          console.error("Errore durante la connessione:", error);
+          alert("Errore durante la connessione a MetaMask.");
+        }
+      } else {
+        alert("MetaMask non trovato. Installa l'estensione MetaMask.");
+      }
+    }
+  </script>
+
+  <button class="wallet-button" onclick="connectWallet()">
+    <img src="logo_phantom.svg" alt="Phantom Logo" class="wallet-logo">
+    Connect Phantom Wallet
+  </button>
+
+  <button class="wallet-button-uniswap" onclick="connectUniswapWallet()">
+    <img src="logo_uniswap.png" alt="Uniswap Logo" class="wallet-logo">
+    Connect Uniswap Wallet
+  </button>
+
+  <button class="wallet-button-metamask" onclick="connectMetaMaskWallet()">
+    <img src="logo_metamask.png" alt="MetaMask Logo" class="wallet-logo">
+    Connect MetaMask Wallet
+  </button>
+
+  <div class="content-container">
+    <div class="content-block">
+      <h2 style="color: #FFA500;"><strong>Support the Launch of Crypto Solar System Dapp</strong></h2>
+<p>The Crypto Solar System Dapp is the core of our innovative project, designed to revolutionize the way we visualize and interact with the cryptocurrency market. This page is dedicated to showcasing the project's evolution, featuring continuously developing functionalities and aiming to deliver an interactive and dynamic platform.</p>
+
+      <iframe src="https://player.vimeo.com/video/1033539565?h=a9bb3fbe2b" allowfullscreen></iframe>
+    </div>
+    <div class="content-block">
+      <h2 style="color: #FFA500;"><strong>The Role of ATAIL</strong></h2>
+      <p>ATAIL is more than just a MEME token: it’s an integral part of our ecosystem. Its value will grow alongside the success of the Crypto Solar System launch, creating opportunities for investors and solidifying its role as the project's representative token.</p>
+    </div>
+    <div class="content-block">
+      <h2 style="color: #FFA500;"><strong>Contribute to Our Success</strong></h2>
+      <p>If you believe in the vision of Crypto Solar System and want to support us in making this innovation a reality, you can contribute by making a donation. We have provided three wallet options to make the process simple and straightforward:
+        <br><br>
+        •&nbsp;&nbsp;&nbsp;MetaMask Wallet<br>
+        •&nbsp;&nbsp;&nbsp;Uniswap Wallet<br>
+        •&nbsp;&nbsp;&nbsp;Phantom Wallet
+<br><br>
+        Every donation brings us closer to our goal and helps turn this vision into reality. Your support is crucial in making the project a success and ensuring the growth of ATAIL.</p>
+    </div>
+  </div>
+</body>
+</html>
