@@ -1,97 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crypto Solar System DApp</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: black;
-      overflow: hidden; /* Mantiene il canvas fisso */
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0; /* Sotto i contenuti */
-    }
-
-    .content-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1; /* Sopra il canvas */
-      overflow-y: auto; /* Barra di scorrimento verticale */
-      padding: 20px; /* Spaziatura interna */
-      box-sizing: border-box; /* Include il padding */
-    }
-
-    .content-block {
-      background: rgba(0, 0, 0, 0.8); /* Sfondo trasparente */
-      color: white;
-      margin: 20px auto; /* Margine sopra e sotto */
-      padding: 20px;
-      border-radius: 8px; /* Angoli arrotondati */
-      max-width: 800px; /* Larghezza massima del contenuto */
-    }
-
-    iframe {
-      width: 100%;
-      height: 500px; /* Altezza del video regolata */
-      border: none;
-      border-radius: 8px;
-      margin-top: 20px; /* Margine sopra il video */
-      margin-bottom: 20px; /* Margine sotto il video */
-    }
-
-    .wallet-button, .wallet-button-uniswap, .wallet-button-metamask {
-      position: fixed;
-      right: 20px;
-      padding: 10px 20px;
-      background-color: #8a2be2; /* Colore viola */
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      z-index: 2; /* Sopra tutto */
-      display: flex;
-      align-items: center; /* Centra logo e testo */
-      gap: 10px; /* Spaziatura tra logo e testo */
-      width: 230px; /* Larghezza fissa */
-      height: 50px; /* Altezza fissa */
-      justify-content: center; /* Centrare contenuti */
-    }
-
-    .wallet-button:hover, .wallet-button-uniswap:hover, .wallet-button-metamask:hover {
-      background-color: #6c2da2; /* Colore più chiaro al passaggio del mouse */
-    }
-
-    .wallet-logo {
-      width: 24px; /* Dimensione del logo */
-      height: 24px;
-    }
-
-    .wallet-button-metamask {
-      top: 80px; /* Posizionato sotto il pulsante Uniswap */
-    }
-
-    .wallet-button-uniswap {
-      top: 140px; /* Posizionato sotto il pulsante MetaMask */
-    }
-
-    .wallet-button {
-      top: 200px; /* Posizionato sotto il pulsante MetaMask */
-    }
-  </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Solar System DApp</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+        overflow: hidden; /* Mantiene il canvas fisso */
+      }
+  
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0; /* Sotto i contenuti */
+      }
+  
+      .content-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1; /* Sopra il canvas */
+        overflow-y: auto; /* Barra di scorrimento verticale */
+        padding: 20px; /* Spaziatura interna */
+        box-sizing: border-box; /* Include il padding */
+      }
+  
+      .content-block {
+        background: rgba(0, 0, 0, 0.8); /* Sfondo trasparente */
+        color: white;
+        margin: 20px auto; /* Margine sopra e sotto */
+        padding: 20px;
+        border-radius: 8px; /* Angoli arrotondati */
+        max-width: 800px; /* Larghezza massima del contenuto */
+      }
+  
+      iframe {
+        width: 100%;
+        height: 500px; /* Altezza del video regolata */
+        border: none;
+        border-radius: 8px;
+        margin-top: 20px; /* Margine sopra il video */
+        margin-bottom: 20px; /* Margine sotto il video */
+      }
+  
+      .wallet-button, .wallet-button-uniswap, .wallet-button-metamask {
+        position: fixed;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: #8a2be2; /* Colore viola */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        z-index: 2; /* Sopra tutto */
+        display: flex;
+        align-items: center; /* Centra logo e testo */
+        gap: 10px; /* Spaziatura tra logo e testo */
+        width: 230px; /* Larghezza fissa */
+        height: 50px; /* Altezza fissa */
+        justify-content: center; /* Centrare contenuti */
+      }
+  
+      .wallet-button:hover, .wallet-button-uniswap:hover, .wallet-button-metamask:hover {
+        background-color: #6c2da2; /* Colore più chiaro al passaggio del mouse */
+      }
+  
+      .wallet-logo {
+        width: 24px; /* Dimensione del logo */
+        height: 24px;
+      }
+  
+      .wallet-button-metamask {
+        top: 80px; /* Posizionato sotto il pulsante Uniswap */
+      }
+  
+      .wallet-button-uniswap {
+        top: 140px; /* Posizionato sotto il pulsante MetaMask */
+      }
+  
+      .wallet-button {
+        top: 200px; /* Posizionato sotto il pulsante MetaMask */
+      }
+  
+      /* Regola per i QR code */
+      .qr-code {
+        width: 300px; /* Dimensione predefinita per desktop */
+        height: 300px;
+        display: block;
+        margin: 10px auto; /* Centra l'immagine */
+      }
+  
+      @media (max-width: 768px) { /* Adattamento per dispositivi mobili */
+        .qr-code {
+          width: 250px; /* Dimensione per mobile */
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>  
   <!-- Include ethers.js library -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
