@@ -8,261 +8,156 @@
       body {
         margin: 0;
         background-color: black;
-        overflow: hidden; /* Mantiene il canvas fisso */
+        overflow-y: auto; /* Permette lo scorrimento verticale */
+        color: white;
+        font-family: Arial, sans-serif;
       }
-  
+
       canvas {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 0; /* Sotto i contenuti */
+        z-index: 0; /* Sfondo */
       }
-  
-      .content-container {
-        position: absolute;
+
+      nav {
+        background-color: #f6b90d;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
         top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1; /* Sopra il canvas */
-        overflow-y: auto; /* Barra di scorrimento verticale */
-        padding: 20px; /* Spaziatura interna */
-        box-sizing: border-box; /* Include il padding */
+        z-index: 1; /* Sopra il contenuto */
       }
-  
+
+      nav div {
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 20px;
+      }
+
+      nav ul li {
+        display: inline;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: black;
+        font-size: 18px;
+        transition: color 0.3s ease;
+      }
+
+      nav ul li a:hover {
+        color: red;
+      }
+
+      .content-container {
+        position: relative;
+        z-index: 1; /* Sopra il canvas */
+        padding: 20px;
+        box-sizing: border-box;
+        max-width: 800px;
+        margin: auto;
+      }
+
       .content-block {
         background: rgba(0, 0, 0, 0.8); /* Sfondo trasparente */
-        color: white;
-        margin: 20px auto; /* Margine sopra e sotto */
+        margin: 20px 0;
         padding: 20px;
-        border-radius: 8px; /* Angoli arrotondati */
-        max-width: 800px; /* Larghezza massima del contenuto */
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
       }
-  
+
       iframe {
         width: 100%;
-        height: 500px; /* Altezza del video regolata */
+        height: 500px;
         border: none;
         border-radius: 8px;
-        margin-top: 20px; /* Margine sopra il video */
-        margin-bottom: 20px; /* Margine sotto il video */
-      }
-  
-      .wallet-button, .wallet-button-uniswap, .wallet-button-metamask {
-        position: fixed;
-        right: 20px;
-        padding: 10px 20px;
-        background-color: #8a2be2; /* Colore viola */
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        z-index: 2; /* Sopra tutto */
-        display: flex;
-        align-items: center; /* Centra logo e testo */
-        gap: 10px; /* Spaziatura tra logo e testo */
-        width: 230px; /* Larghezza fissa */
-        height: 50px; /* Altezza fissa */
-        justify-content: center; /* Centrare contenuti */
-      }
-  
-      .wallet-button:hover, .wallet-button-uniswap:hover, .wallet-button-metamask:hover {
-        background-color: #6c2da2; /* Colore più chiaro al passaggio del mouse */
-      }
-  
-      .wallet-logo {
-        width: 24px; /* Dimensione del logo */
-        height: 24px;
-      }
-  
-      .wallet-button-metamask {
-        top: 80px; /* Posizionato sotto il pulsante Uniswap */
-      }
-  
-      .wallet-button-uniswap {
-        top: 140px; /* Posizionato sotto il pulsante MetaMask */
-      }
-  
-      .wallet-button {
-        top: 200px; /* Posizionato sotto il pulsante MetaMask */
-      }
-  
-      /* Regola per i QR code */
-      .qr-code {
-        width: 300px; /* Dimensione predefinita per desktop */
-        height: 300px;
-        display: block;
-        margin: 10px auto; /* Centra l'immagine */
-      }
-  
-      @media (max-width: 768px) { /* Adattamento per dispositivi mobili */
-        .qr-code {
-          width: 250px; /* Dimensione per mobile */
-          height: 250px;
-        }
+        margin-top: 20px;
       }
     </style>
   </head>
-  <body>  
-  <!-- Include ethers.js library -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    // Imposta la scena
-    const scene = new THREE.Scene();
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <div>Crypto Solar System</div>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#support">Support Us</a></li>
+      </ul>
+    </nav>
 
-    // Imposta la camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 500;
+    <!-- Sfondo stelle -->
+    <canvas id="starCanvas"></canvas>
 
-    // Imposta il renderer
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    <!-- Contenuto -->
+    <div class="content-container">
+      <div class="content-block" id="home">
+        <h2 style="color: #FFA500;"><strong>Welcome to the Crypto Solar System DApp</strong></h2>
+        <p>The Crypto Solar System DApp is a revolutionary way to explore the cryptocurrency universe. Dive in and discover a world of opportunities.</p>
+        <iframe width="1280" height="720" src="https://www.youtube.com/embed/fRMxcxPDmDY" title="Crypto Solar System"></iframe>
+      </div>
 
-    // Configurazione dello sfondo con le stelle
-    const starGeometry = new THREE.BufferGeometry();
-    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
-    const starVertices = [];
-    for (let i = 0; i < 1000; i++) {
-      const x = (Math.random() - 0.5) * 2000;
-      const y = (Math.random() - 0.5) * 2000;
-      const z = (Math.random() - 0.5) * 2000;
-      starVertices.push(x, y, z);
-    }
-    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
+      <div class="content-block" id="about">
+        <h2 style="color: #FFA500;"><strong>About Us</strong></h2>
+        <p>We are dedicated to creating an innovative platform that transforms the way people interact with the crypto market. Join us in this exciting journey!</p>
+      </div>
 
-    // Funzione di animazione
-    function animate() {
-      requestAnimationFrame(animate);
-      stars.rotation.y += 0.001; // Rotazione lenta delle stelle
-      renderer.render(scene, camera);
-    }
-    animate();
+      <div class="content-block" id="support">
+        <h2 style="color: #FFA500;"><strong>Support Us</strong></h2>
+        <p>Help us bring this vision to life by contributing to the project. Every bit of support counts and drives the success of the Crypto Solar System DApp.</p>
+      </div>
+    </div>
 
-    // Adatta il rendering alla finestra
-    window.addEventListener('resize', () => {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      // Sfondo stelle
+      const canvas = document.getElementById('starCanvas');
+      const renderer = new THREE.WebGLRenderer({ canvas });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-    });
 
-    // Funzioni di connessione ai wallet (Phantom, Uniswap, MetaMask)
-    async function connectWallet() {
-      if (window.solana && window.solana.isPhantom) {
-        try {
-          const resp = await window.solana.connect();
-          alert(`Wallet connesso: ${resp.publicKey.toString()}`);
-        } catch (err) {
-          console.error("Errore nella connessione al wallet:", err);
-        }
-      } else {
-        window.location.href = "https://phantom.app/ul/connect";
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 100;
+
+      const starGeometry = new THREE.BufferGeometry();
+      const starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
+
+      const starVertices = [];
+      for (let i = 0; i < 1000; i++) {
+        const x = (Math.random() - 0.5) * 2000;
+        const y = (Math.random() - 0.5) * 2000;
+        const z = (Math.random() - 0.5) * 2000;
+        starVertices.push(x, y, z);
       }
-    }
 
-    let provider, signer;
+      starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+      const stars = new THREE.Points(starGeometry, starMaterial);
+      scene.add(stars);
 
-    async function connectUniswapWallet() {
-      if (window.ethereum) {
-        try {
-          provider = new ethers.providers.Web3Provider(window.ethereum);
-          await provider.send("eth_requestAccounts", []);
-          signer = provider.getSigner();
-          const address = await signer.getAddress();
-          alert(`Uniswap Wallet connesso: ${address}`);
-        } catch (error) {
-          console.error("Errore durante la connessione:", error);
-          alert("Errore durante la connessione al wallet.");
-        }
-      } else {
-        alert("Ethereum wallet non trovato. Installa MetaMask, Uniswap Wallet o simili.");
+      function animate() {
+        requestAnimationFrame(animate);
+        stars.rotation.y += 0.001;
+        renderer.render(scene, camera);
       }
-    }
+      animate();
 
-    async function connectMetaMaskWallet() {
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-          alert(`MetaMask Wallet connesso: ${accounts[0]}`);
-        } catch (error) {
-          console.error("Errore durante la connessione:", error);
-          alert("Errore durante la connessione a MetaMask.");
-        }
-      } else {
-        alert("MetaMask non trovato. Installa l'estensione MetaMask.");
-      }
-    }
-  </script>
-
-  <button class="wallet-button" onclick="connectWallet()">
-    <img src="logo_phantom.svg" alt="Phantom Logo" class="wallet-logo">
-    Connect Phantom Wallet
-  </button>
-
-  <button class="wallet-button-uniswap" onclick="connectUniswapWallet()">
-    <img src="logo_uniswap.png" alt="Uniswap Logo" class="wallet-logo">
-    Connect Uniswap Wallet
-  </button>
-
-  <button class="wallet-button-metamask" onclick="connectMetaMaskWallet()">
-    <img src="logo_metamask.png" alt="MetaMask Logo" class="wallet-logo">
-    Connect MetaMask Wallet
-  </button>
-
-  <div class="content-container">
-    <div class="content-block">
-      <h2 style="color: #FFA500;"><strong>Support the Launch of Crypto Solar System Dapp</strong></h2>
-<p>The Crypto Solar System Dapp is the core of our innovative project, designed to revolutionize the way we visualize and interact with the cryptocurrency market. This page is dedicated to showcasing the project's evolution, featuring continuously developing functionalities and aiming to deliver an interactive and dynamic platform.</p>
-
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/fRMxcxPDmDY" title="Crypto Solar System" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-    <div class="content-block">
-      <h2 style="color: #FFA500;"><strong>The Role of ATAIL</strong></h2>
-      <p>ATAIL is more than just a MEME token: it’s an integral part of our ecosystem. Its value will grow alongside the success of the Crypto Solar System launch, creating opportunities for investors and solidifying its role as the project's representative token.</p>
-    </div>
-    <div class="content-block">
-      <h2 style="color: #FFA500;"><strong>Contribute to Our Success</strong></h2>
-      <p>If you believe in the vision of Crypto Solar System and want to support us in making this innovation a reality, you can contribute by making a donation. We have provided three wallet options to make the process simple and straightforward:
-        <br><br>
-        •&nbsp;&nbsp;&nbsp;MetaMask Wallet
-<div style="margin-top: 15px;">
-    <img src="MetamakBaseall.png" alt="MetaMask Wallet QR Code" class="qr-code">
-</div>
-<p style="color: white; font-size: 14px; margin-top: 5px;">
-    This QR code is configured for <strong>USDT</strong> on the <strong>BASE</strong> network. However, using the wallet address: 
-    0x6A809CF0B634bb2A9Bd023AbBaB2bA7BDdd087c5, to send other cryptocurrencies on the following compatible networks: 
-    <strong>Ethereum Mainnet</strong> - <strong>Polygon Mainnet</strong> - <strong>Binance Smart Chain (BEP-20)</strong> - <strong>Optimism</strong> - 
-    <strong>Avalanche C-Chain</strong> - <strong>zkSync Mainnet</strong> - <strong>Arbitrum One</strong>.
-</p>
-        <br>
-        •&nbsp;&nbsp;&nbsp;Uniswap Wallet
-        <div style="margin-top: 15px;">
-            <img src="UniswapETHall.png" alt="Uniswap Wallet QR Code" class="qr-code">
-        </div>
-        <p style="color: white; font-size: 14px; margin-top: 5px;">
-          This QR code is configured for <strong>ETH</strong> on the <strong>ETHEREUM MAINNET</strong> network. However, using the wallet address: 
-          0x583FdDBba8072C3bC86B68DA5779a83AF71FB089, to send other cryptocurrencies on the following compatible networks: 
-          <strong>Polygon Mainnet</strong> - <strong>Arbitrum One</strong> - <strong>Optimism</strong> - <strong>Base</strong> - 
-          <strong>Binance Smart Chain (BEP-20)</strong> - <strong>Advalance</strong> - <strong>Celo</strong> <strong>zkSync Mainnet</strong>.
-        </p>
-        <br>
-        •&nbsp;&nbsp;&nbsp;Phantom Wallet
-        <div style="margin-top: 15px;">
-            <img src="PhantomSol.png" alt="Phantom Wallet QR Code" class="qr-code">
-        </div>
-        <p style="color: white; font-size: 14px; margin-top: 5px;">
-            This QR code is configured for the <strong>SOL</strong> on the <strong>SOLANA</strong> network.
-        </p>
-        <br>
-        <br>
-        Every donation brings us closer to our goal and helps turn this vision into reality. Your support is crucial in making the project a success and ensuring the growth of ATAIL.
-    </div>
-  </div>
-</body>
+      window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      });
+    </script>
+  </body>
 </html>
