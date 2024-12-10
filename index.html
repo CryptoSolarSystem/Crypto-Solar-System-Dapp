@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Crypto Solar System DApp</title>
   <style>
     body {
@@ -10,15 +10,6 @@
       background-color: black;
       overflow-x: hidden;
       font-family: Arial, sans-serif;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
     }
 
     nav {
@@ -51,14 +42,32 @@
     }
 
     nav ul li a {
-  text-decoration: none;
-  color: black;
-  font-size: 18px;
-  font-weight: bold; /* Aggiungi questa regola */
-}
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+    }
 
     nav ul li a:hover {
       color: red;
+    }
+
+    /* Pulsante hamburger nascosto di default (mostrato su mobile) */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu-toggle .bar {
+      width: 25px;
+      height: 3px;
+      background-color: black;
+      margin: 4px 0;
     }
 
     .content-container {
@@ -153,52 +162,75 @@
       color: black;
       text-decoration: none;
       font-weight: bold;
+      font-size: 14px; /* Dimensione ridotta per bilanciare con le icone */
     }
 
     .qr-code {
       width: 100%;
-      max-width: 300px; /* Dimensione massima del QR code */
-      height: auto; /* Mantiene le proporzioni */
+      max-width: 300px;
+      height: auto;
       display: block;
-      margin: 0 auto; /* Centra il QR code */
+      margin: 0 auto;
     }
 
-    .cookie-banner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-}
+    .cookie-banner div {
+      display: flex;
+      gap: 10px;
+    }
 
-.cookie-banner div {
-  display: flex;
-  gap: 10px; /* Spazio tra i pulsanti */
-}
+    .cookie-banner div button {
+      background-color: #f6b90d;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-.cookie-banner div button {
-  background-color: #f6b90d;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
+    .cookie-banner div button:hover {
+      background-color: red;
+      color: white;
+    }
 
-.cookie-banner div button:hover {
-  background-color: red;
-  color: white;
-}
+    /* Centratura del pulsante "Send Message" (interpretato come pulsante di azione principale) */
+    form button[type="submit"] {
+      display: block;
+      margin: 0 auto;
+    }
 
+    /* Stili responsive per il menu su mobile */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none; /* Menu nascosto su mobile */
+        flex-direction: column;
+        gap: 10px;
+        background-color: #f6b90d;
+        position: absolute;
+        top: 60px;
+        right: 15px;
+        padding: 10px;
+        border-radius: 8px;
+      }
 
+      nav ul.open {
+        display: flex; /* Mostra il menu quando la classe .open è presente */
+      }
+
+      .menu-toggle {
+        display: flex; /* Mostra il pulsante hamburger su mobile */
+      }
+    }
   </style>
 </head>
 <body>
   <nav>
     <div>Crypto Solar System</div>
+    <button class="menu-toggle" aria-label="Menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About Us</a></li>
@@ -207,32 +239,30 @@
     </ul>
   </nav>
 
-  <canvas></canvas>
-
   <div class="content-container">
     <div class="content-block" id="home">
       <h2 style="color: #FFC107; text-align: center;">Crypto Solar System DApp</h2>
-<img src="LogoCryptoSolarSystem.png" alt="Crypto Solar System Logo" style="display: block; margin: 20px auto; max-width: 200px;">
-<p>
-  The Crypto Solar System DApp is a revolutionary way to explore the
-  cryptocurrency universe. Dive in and discover a world of opportunities.
-</p>
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/okKkIIFjdaU" title="4K - Crypto Solar System Pitch Deck" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <img src="LogoCryptoSolarSystem.png" alt="Crypto Solar System Logo" style="display: block; margin: 20px auto; max-width: 200px;">
+      <p>
+        The Crypto Solar System DApp is a revolutionary way to explore the
+        cryptocurrency universe. Dive in and discover a world of opportunities.
+      </p>
+      <iframe width="1280" height="720" src="https://www.youtube.com/embed/okKkIIFjdaU" title="4K - Crypto Solar System Pitch Deck" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
     <div class="content-block" id="about">
       <h2 style="color: #FFC107;">About Us</h2>
       <p>
         The <strong style="color: #FFC107;">Crypto Solar System</strong> represents a revolution in the exploration of the cryptocurrency market. Imagine a digital universe where every cryptocurrency moves like a planet in a solar system, offering an interactive and visually extraordinary experience.
-        </p>
-        <p>
-          <strong style="color: #FFC107;">Our vision is clear:</strong> to make the crypto world accessible, intuitive, and engaging for everyone, from beginners to experienced investors. At the heart of this innovative ecosystem lies <strong style="color: #FFC107;">ATAIL - Token</strong>, our guardian token, designed to incentivize participation and drive the project's growth.
-        </p>
-        <p>
-          With a strategic roadmap, unique design, and a strong emphasis on transparency, the <strong style="color: #FFC107;">Crypto Solar System</strong> is not just a project: it’s a new frontier for those who want to explore, interact, and thrive in the cryptocurrency market.
-        </p>
-        <p>
-          Join us on this crowdfunding journey and transform your vision of the crypto world. Discover more about our plans in the <strong style="color: #FFC107;">Roadmap</strong> section.
-        </p>
+      </p>
+      <p>
+        <strong style="color: #FFC107;">Our vision is clear:</strong> to make the crypto world accessible, intuitive, and engaging for everyone, from beginners to experienced investors. At the heart of this innovative ecosystem lies <strong style="color: #FFC107;">ATAIL - Token</strong>, our guardian token, designed to incentivize participation and drive the project's growth.
+      </p>
+      <p>
+        With a strategic roadmap, unique design, and a strong emphasis on transparency, the <strong style="color: #FFC107;">Crypto Solar System</strong> is not just a project: it’s a new frontier for those who want to explore, interact, and thrive in the cryptocurrency market.
+      </p>
+      <p>
+        Join us on this crowdfunding journey and transform your vision of the crypto world. Discover more about our plans in the <strong style="color: #FFC107;">Roadmap</strong> section.
+      </p>
     </div>
     <div class="content-block" id="roadmap">
       <h2 style="color: #FFC107;">Progress Towards Our Goal</h2>
@@ -245,22 +275,21 @@
       </div>
       <p style="text-align: center; margin-top: 5px;">25% Funded</p>
       
-      <!-- Fine blocco della barra -->
-      
       <div class="content-block" id="roadmap">
         <h2 style="color: #FFC107;">Roadmap</h2>
         <p>
           Phase 1 of the funding, amounting to <span style="color:green;"><b>$100,000</b></span>, will be dedicated to covering the essential costs to make the project fully operational.
-      </p>
-      <p>
-        This includes upgrading the <b>hosting system</b>, developing <b>advanced features</b>, and implementing <b>VR functionality</b>.
-    </p>
-    <p>
-      Thanks to <b>virtual reality</b>, users will immerse themselves in a unique experience, exploring the <span style="color:#FFC107;"><b>Crypto Solar System</b></span> in an interactive space that revolutionizes the way cryptocurrencies are experienced.
-  </p>
-  <p>
-    With this step, we will position ourselves as <b>leaders in the industry</b>, offering an unprecedented level of innovation.
-</p>
+        </p>
+        <p>
+          This includes upgrading the <b>hosting system</b>, developing <b>advanced features</b>, and implementing <b>VR functionality</b>.
+        </p>
+        <p>
+          Thanks to <b>virtual reality</b>, users will immerse themselves in a unique experience, exploring the <span style="color:#FFC107;"><b>Crypto Solar System</b></span> in an interactive space that revolutionizes the way cryptocurrencies are experienced.
+        </p>
+        <p>
+          With this step, we will position ourselves as <b>leaders in the industry</b>, offering an unprecedented level of innovation.
+        </p>
+      </div>
     </div>
     <div class="content-block" id="support">
       <h2 style="color: #FFC107;">Support Us</h2>
@@ -268,123 +297,122 @@
         If you believe in the vision of Crypto Solar System and want to
         support us in making this innovation a reality, you can contribute by
         making a donation.
-    </p>
-    
-    <br>
-    <span style="color: #F6851B; font-weight: bold;">•&nbsp;&nbsp;&nbsp;MetaMask Wallet</span>
-<div style="margin-top: 15px; margin-bottom: 20px;">
-    <img src="MetamakBaseall.png" alt="MetaMask Wallet QR Code" class="qr-code">
-</div>
-<p style="color: white; font-size: 14px; margin-top: 10px;">
-  This QR Code is configured to receive <strong><span style="color: #627EEA;">Ethereum</span></strong> on the <strong><span style="color: #627EEA;">BASE Network</span></strong>.  
-  However, thanks to the compatibility of <strong>MetaMask</strong>, the same address <span style="color: green;">0x6A809CF0B634bb2A9Bd023AbBaB2bA7BDdd087c5</span> can also receive funds and other cryptocurrencies supported by different networks: 
-    <strong><span style="color: #627EEA;">Ethereum Mainnet</span></strong> - <strong><span style="color: #8247E5;">Polygon Mainnet</span></strong> - <strong><span style="color: #F3BA2F;">Binance Smart Chain (BEP-20)</span></strong> - <strong><span style="color: #FF0420;">Optimism</span></strong> - 
-    <strong><span style="color: #FF7F50;">Avalanche C-Chain</span></strong> - <strong><span style="color: #8C8DFE;">zkSync Mainnet</span></strong> - <strong><span style="color: #4682B4;">Arbitrum One</span></strong>.
-</p>
-<br>
-<span style="color: #FF007A; font-weight: bold;">•&nbsp;&nbsp;&nbsp;Uniswap Wallet</span>
-<div style="margin-top: 15px; margin-bottom: 20px;">
-    <img src="UniswapETHall.png" alt="MetaMask Wallet QR Code" class="qr-code">
-</div>
-<p style="color: white; font-size: 14px; margin-top: 10px;">
-  This QR Code is configured to receive <strong><span style="color: #627EEA;">Ethereum</span></strong> on the <strong><span style="color: #627EEA;">Ethereum Mainnet</span></strong>.  
-  However, thanks to the compatibility of <strong>Uniswap Wallet</strong>, the same address <span style="color: green;">0x583FdDBba8072C3bC86B68DA5779a83AF71FB089</span> can also receive funds and other cryptocurrencies supported by different networks: 
-    <strong><span style="color: #627EEA;">BASE Network</span></strong> - <strong><span style="color: #8247E5;">Polygon Mainnet</span></strong> - <strong><span style="color: #F3BA2F;">Binance Smart Chain (BEP-20)</span></strong> - <strong><span style="color: #FF0420;">Optimism</span></strong> - 
-    <strong><span style="color: #FF7F50;">Avalanche C-Chain</span></strong> - <strong><span style="color: #8C8DFE;">zkSync Mainnet</span></strong> - <strong><span style="color: #4682B4;">Arbitrum One</span></strong>.
-</p>
-<br>
-<span style="color: #0052FF; font-weight: bold;">•&nbsp;&nbsp;&nbsp;Coinbase Wallet</span>
-<div style="margin-top: 15px; margin-bottom: 20px;">
-    <img src="CoinbaseWalletethbase.png" alt="MetaMask Wallet QR Code" class="qr-code">
-</div>
-<p style="color: white; font-size: 14px; margin-top: 10px;">
-  This QR Code is configured to receive <strong><span style="color: #627EEA;">Ethereum</span></strong> on the <strong><span style="color: #627EEA;">BASE Network</span></strong>.  
-  However, thanks to the compatibility of <strong>Coinbase Wallet</strong>, the same address <span style="color: green;">0x83492149C7EA321b275b119d427f25882a7f92b3</span> can also receive funds and other cryptocurrencies supported by different networks: 
-    <strong><span style="color: #627EEA;">Ethereum Mainnet</span></strong> - <strong><span style="color: #8247E5;">Polygon Mainnet</span></strong> - <strong><span style="color: #F3BA2F;">Binance Smart Chain (BEP-20)</span></strong> - <strong><span style="color: #FF0420;">Optimism</span></strong> - 
-    <strong><span style="color: #FF7F50;">Avalanche C-Chain</span></strong> - <strong><span style="color: #8C8DFE;">zkSync Mainnet</span></strong> - <strong><span style="color: #4682B4;">Arbitrum One</span></strong>.
-</p>
-<br>
-<span style="color: #8C93F9; font-weight: bold;">•&nbsp;&nbsp;&nbsp;Phantom Wallet</span>
-<div style="margin-top: 15px; margin-bottom: 20px;">
-    <img src="PhantomSol.png" alt="MetaMask Wallet QR Code" class="qr-code">
-</div>
-<p style="color: white; font-size: 14px; margin-top: 10px;">
-  <p>This QR Code is configured to receive any cryptocurrency on the <strong><span style="color: #00FFA3;">Solana Mainnet</span></strong>.</p>
-</p>
-<br>
-<span style="color: #8C93F9; font-weight: bold;">•&nbsp;&nbsp;&nbsp;Phantom Wallet</span>
-<div style="margin-top: 15px; margin-bottom: 20px;">
-    <img src="PhantomBase.png" alt="MetaMask Wallet QR Code" class="qr-code">
-</div>
-<p style="color: white; font-size: 14px; margin-top: 10px;">
-  <p>This QR Code is configured to receive any cryptocurrency on the <strong><span style="color: #0052FF;">Base Network</span></strong>.</p>
-</p>
-<br>
-
-    <p>
-        Every donation brings us closer to our goal and helps turn this vision into reality. Your support is crucial in making the project a success and ensuring the growth of ATAIL.
-    </p>
-    
-    <div class="content-block" id="contact">
-      <h2 style="color: #FFC107;">Contact Us</h2>
-      <p style="color: #FFFFFF; font-size: 1.2em;">
-        Feel free to reach out to us for any queries, suggestions, or support. We’re here to help!
       </p>
-      <form action="https://formspree.io/f/mjkvdrbw" method="POST" style="margin-top: 20px;">
-        <input
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          required
-          style="width: 60%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #222; color: #FFF;"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          required
-          style="width: 60%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #222; color: #FFF;"
-        />
-        <textarea
-          name="message"
-          rows="5"
-          placeholder="Your Message"
-          required
-          style="width: 60%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #222; color: #FFF;"
-        ></textarea>
-        <button
-          type="submit"
-          style="
-            background-color: #FFC107;
-            color: #000;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-          "
-        >
-          Send Message
-        </button>
-      </form>
-      <div style="margin-top: 30px;">
-        <p style="color: #FFFFFF; font-size: 1.2em;">Or connect with us via:</p>
-        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px;">
-          <!-- Telegram -->
-          <a href="https://t.me/Crypto_Solar_System" target="_blank">
-            <img src="telegram-icon.png" alt="Telegram" style="width: 48px; height: 48px;" />
-          </a>
-          <!-- Twitter -->
-          <a href="https://x.com/CrySolSys" target="_blank">
-            <img src="twitter-icon.png" alt="Twitter" style="width: 48px; height: 48px;" />
-          </a>
-          <!-- Instagram -->
-          <a href="https://www.instagram.com/crypto_solar_system/" target="_blank">
-            <img src="instagram-icon.png" alt="Instagram" style="width: 48px; height: 48px;" />
-          </a>
+      <br>
+      <span style="color: #F6851B; font-weight: bold;">•&nbsp;&nbsp;&nbsp;MetaMask Wallet</span>
+      <div style="margin-top: 15px; margin-bottom: 20px;">
+        <img src="MetamakBaseall.png" alt="MetaMask Wallet QR Code" class="qr-code">
+      </div>
+      <p style="color: white; font-size: 14px; margin-top: 10px;">
+        This QR Code is configured to receive <strong><span style="color: #627EEA;">Ethereum</span></strong> on the <strong><span style="color: #627EEA;">BASE Network</span></strong>.  
+        However, thanks to the compatibility of <strong>MetaMask</strong>, the same address <span style="color: green;">0x6A809CF0B634bb2A9Bd023AbBaB2bA7BDdd087c5</span> can also receive funds and other cryptocurrencies supported by different networks: 
+        <strong><span style="color: #627EEA;">Ethereum Mainnet</span></strong> - <strong><span style="color: #8247E5;">Polygon Mainnet</span></strong> - <strong><span style="color: #F3BA2F;">Binance Smart Chain (BEP-20)</span></strong> - <strong><span style="color: #FF0420;">Optimism</span></strong> - 
+        <strong><span style="color: #FF7F50;">Avalanche C-Chain</span></strong> - <strong><span style="color: #8C8DFE;">zkSync Mainnet</span></strong> - <strong><span style="color: #4682B4;">Arbitrum One</span></strong>.
+      </p>
+      <br>
+      <span style="color: #FF007A; font-weight: bold;">•&nbsp;&nbsp;&nbsp;Uniswap Wallet</span>
+      <div style="margin-top: 15px; margin-bottom: 20px;">
+        <img src="UniswapETHall.png" alt="Uniswap Wallet QR Code" class="qr-code">
+      </div>
+      <p style="color: white; font-size: 14px; margin-top: 10px;">
+        This QR Code is configured to receive <strong><span style="color: #627EEA;">Ethereum</span></strong> on the <strong><span style="color: #627EEA;">Ethereum Mainnet</span></strong>.  
+        However, thanks to the compatibility of <strong>Uniswap Wallet</strong>, the same address <span style="color: green;">0x583FdDBba8072C3bC86B68DA5779a83AF71FB089</span> can also receive funds and other cryptocurrencies supported by different networks: 
+        <strong><span style="color: #627EEA;">BASE Network</span></strong> - <strong><span style="color: #8247E5;">Polygon Mainnet</span></strong> - <strong><span style="color: #F3BA2F;">Binance Smart Chain (BEP-20)</span></strong> - <strong><span style="color: #FF0420;">Optimism</span></strong> - 
+        <strong><span style="color: #FF7F50;">Avalanche C-Chain</span></strong> - <strong><span style="color: #8C8DFE;">zkSync Mainnet</span></strong> - <strong><span style="color: #4682B4;">Arbitrum One</span></strong>.
+      </p>
+      <br>
+      <span style="color: #0052FF; font-weight: bold;">•&nbsp;&nbsp;&nbsp;Coinbase Wallet</span>
+      <div style="margin-top: 15px; margin-bottom: 20px;">
+        <img src="CoinbaseWalletethbase.png" alt="Coinbase Wallet QR Code" class="qr-code">
+      </div>
+      <p style="color: white; font-size: 14px; margin-top: 10px;">
+        This QR Code is configured to receive <strong><span style="color: #627EEA;">Ethereum</span></strong> on the <strong><span style="color: #627EEA;">BASE Network</span></strong>.  
+        However, thanks to the compatibility of <strong>Coinbase Wallet</strong>, the same address <span style="color: green;">0x83492149C7EA321b275b119d427f25882a7f92b3</span> can also receive funds and other cryptocurrencies supported by different networks: 
+        <strong><span style="color: #627EEA;">Ethereum Mainnet</span></strong> - <strong><span style="color: #8247E5;">Polygon Mainnet</span></strong> - <strong><span style="color: #F3BA2F;">Binance Smart Chain (BEP-20)</span></strong> - <strong><span style="color: #FF0420;">Optimism</span></strong> - 
+        <strong><span style="color: #FF7F50;">Avalanche C-Chain</span></strong> - <strong><span style="color: #8C8DFE;">zkSync Mainnet</span></strong> - <strong><span style="color: #4682B4;">Arbitrum One</span></strong>.
+      </p>
+      <br>
+      <span style="color: #8C93F9; font-weight: bold;">•&nbsp;&nbsp;&nbsp;Phantom Wallet</span>
+      <div style="margin-top: 15px; margin-bottom: 20px;">
+        <img src="PhantomSol.png" alt="Phantom Wallet QR Code" class="qr-code">
+      </div>
+      <p style="color: white; font-size: 14px; margin-top: 10px;">
+        This QR Code is configured to receive any cryptocurrency on the <strong><span style="color: #00FFA3;">Solana Mainnet</span></strong>.
+      </p>
+      <br>
+      <span style="color: #8C93F9; font-weight: bold;">•&nbsp;&nbsp;&nbsp;Phantom Wallet</span>
+      <div style="margin-top: 15px; margin-bottom: 20px;">
+        <img src="PhantomBase.png" alt="Phantom Wallet QR Code" class="qr-code">
+      </div>
+      <p style="color: white; font-size: 14px; margin-top: 10px;">
+        This QR Code is configured to receive any cryptocurrency on the <strong><span style="color: #0052FF;">Base Network</span></strong>.
+      </p>
+      <br>
+      <p>
+        Every donation brings us closer to our goal and helps turn this vision into reality. Your support is crucial in making the project a success and ensuring the growth of ATAIL.
+      </p>
+
+      <div class="content-block" id="contact">
+        <h2 style="color: #FFC107;">Contact Us</h2>
+        <p style="color: #FFFFFF; font-size: 1.2em;">
+          Feel free to reach out to us for any queries, suggestions, or support. We’re here to help!
+        </p>
+        <form action="https://formspree.io/f/mjkvdrbw" method="POST" style="margin-top: 20px;">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+            style="width: 60%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #222; color: #FFF;"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            required
+            style="width: 60%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #222; color: #FFF;"
+          />
+          <textarea
+            name="message"
+            rows="5"
+            placeholder="Your Message"
+            required
+            style="width: 60%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #222; color: #FFF;"
+          ></textarea>
+          <button
+            type="submit"
+            style="
+              background-color: #FFC107;
+              color: #000;
+              padding: 10px 20px;
+              border: none;
+              border-radius: 5px;
+              font-size: 1em;
+              cursor: pointer;
+            "
+          >
+            Send Message
+          </button>
+        </form>
+        <div style="margin-top: 30px;">
+          <p style="color: #FFFFFF; font-size: 1.2em;">Or connect with us via:</p>
+          <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px;">
+            <!-- Telegram -->
+            <a href="https://t.me/Crypto_Solar_System" target="_blank">
+              <img src="telegram-icon.png" alt="Telegram" style="width: 48px; height: 48px;" />
+            </a>
+            <!-- Twitter -->
+            <a href="https://x.com/CrySolSys" target="_blank">
+              <img src="twitter-icon.png" alt="Twitter" style="width: 48px; height: 48px;" />
+            </a>
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/crypto_solar_system/" target="_blank">
+              <img src="instagram-icon.png" alt="Instagram" style="width: 48px; height: 48px;" />
+            </a>
+          </div>
         </div>
       </div>
-    </div>   
+    </div>
   </div>
 
   <div class="cookie-banner">
@@ -397,7 +425,6 @@
       <button onclick="declineCookies()">Reject</button>
     </div>
   </div>
-  
 
   <footer>
     <div class="footer-links">
@@ -409,52 +436,10 @@
         <a href="https://coinglass.com" target="_blank"><img src="./coinglass-icon.png" alt="CoinGlass"></a>
         <a href="https://pump.fun" target="_blank"><img src="./pumpfun-icon.png" alt="Pump.fun"></a>
       </div>
+    </div>
   </footer>
 
   <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    const starGeometry = new THREE.BufferGeometry();
-    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
-    const starVertices = [];
-    for (let i = 0; i < 1000; i++) {
-      starVertices.push(
-        (Math.random() - 0.5) * 2000,
-        (Math.random() - 0.5) * 2000,
-        (Math.random() - 0.5) * 2000
-      );
-    }
-    starGeometry.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute(starVertices, 3)
-    );
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
-
-    camera.position.z = 1000;
-
-    function animate() {
-      requestAnimationFrame(animate);
-      stars.rotation.y += 0.001;
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener("resize", () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-    });
-
     function acceptCookies() {
       document.querySelector(".cookie-banner").style.display = "none";
     }
@@ -466,5 +451,6 @@
       document.querySelector(".cookie-banner").style.display = "none";
     }
   </script>
+  <script src="menu.js"></script>
 </body>
 </html>
